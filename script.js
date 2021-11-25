@@ -5,6 +5,7 @@ const Bodies = Matter.Bodies;
 var engine, world;
 var caixa1, caixa2, caixa3, caixa4, caixa5;
 var pig1;
+var plataforma;
 
 function setup() {
   createCanvas(1200, 400);
@@ -13,6 +14,7 @@ function setup() {
   world = engine.world;
 
   ground = new Ground(600, height, 1200, 20);
+  plataforma=new Ground(150, 305, 300, 170)
 
   caixa1 = new Box(700, 320, 70, 70);
   caixa2 = new Box(920, 320, 70, 70);
@@ -51,6 +53,6 @@ function draw() {
   caixa5.display();
   log4.display();
   log5.display();
-
+  plataforma.display();
   //   bird.display();
 }
