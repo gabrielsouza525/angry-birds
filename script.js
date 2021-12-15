@@ -1,11 +1,19 @@
 const Engine = Matter.Engine;
 const World = Matter.World;
 const Bodies = Matter.Bodies;
+const Constraint =Matter.Constraint
 
 var engine, world;
 var caixa1, caixa2, caixa3, caixa4, caixa5;
 var pig1;
 var plataforma;
+var bird;
+var fundo;
+var estilingue;
+
+function preload() {
+  fundo=loadImage("sprites/bg.png")
+}
 
 function setup() {
   createCanvas(1200, 400);
@@ -13,8 +21,8 @@ function setup() {
   engine = Engine.create();
   world = engine.world;
 
-  ground = new Ground(600, height, 1200, 20);
-  plataforma=new Ground(150, 305, 300, 170)
+  ground = new Chao(600, height, 1200, 20);
+  plataforma=new Chao(150, 305, 300, 170)
 
   caixa1 = new Box(700, 320, 70, 70);
   caixa2 = new Box(920, 320, 70, 70);
@@ -31,11 +39,15 @@ function setup() {
   log4 = new Log(760, 120, 150, PI / 7);
   log5 = new Log(870, 120, 150, -PI / 7);
 
-  //   bird = new Bird(100, 100);
+  bird = new Bird(200, 50);
+
+  estilingue = new Estilingue(bird.corpo,{x:200,y:50})
+
+  
 }
 
 function draw() {
-  background("black");
+  background(fundo)
 
   Engine.update(engine);
 
@@ -54,5 +66,14 @@ function draw() {
   log4.display();
   log5.display();
   plataforma.display();
-  //   bird.display();
+  bird.display();
+  estilingue.display();
+}
+
+function mouseDragged(){
+  Matter.Body.setPosition(bird.corpo, {x: mouseX,y: mouseY})
+}
+
+function mouseReleased(){
+  estilingue.lanca()
 }
