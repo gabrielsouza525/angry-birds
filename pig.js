@@ -7,7 +7,7 @@ class Pig extends Base {
     }
 
     display(){
-      console.log(this.corpo.speed)
+      
      if (this.corpo.speed<3) {
       super.display()
      } else {

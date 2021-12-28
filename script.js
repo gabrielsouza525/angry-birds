@@ -77,3 +77,9 @@ function mouseDragged(){
 function mouseReleased(){
   estilingue.lanca()
 }
+
+function keyPressed(){
+  if (keyCode===32) {
+    Matter.Body.setPosition(bird.corpo, {x: 200,y: 50})
+  }
+}
