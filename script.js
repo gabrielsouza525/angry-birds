@@ -10,9 +10,13 @@ var plataforma;
 var bird;
 var fundo;
 var estilingue;
+var estado="inicio"
+var fundoPadrao="sprites/bg.png"
+var pontuacao=0
+var cor="black"
 
 function preload() {
-  fundo=loadImage("sprites/bg.png")
+  escolheFundo()
 }
 
 function setup() {
@@ -42,12 +46,15 @@ function setup() {
   bird = new Bird(200, 50);
 
   estilingue = new Estilingue(bird.corpo,{x:200,y:50})
-
-  
 }
 
 function draw() {
-  background(fundo)
+  if (fundo) {
+    background(fundo)
+  }
+
+  fill(cor)
+  text("Pontuação:"+pontuacao,1000, 40)
 
   Engine.update(engine);
 
@@ -56,11 +63,13 @@ function draw() {
   ground.display();
   pig1.display();
   log1.display();
+  pig1.placar();
 
   caixa3.display();
   caixa4.display();
   pig3.display();
   log3.display();
+  pig3.placar();
 
   caixa5.display();
   log4.display();
@@ -71,15 +80,37 @@ function draw() {
 }
 
 function mouseDragged(){
-  Matter.Body.setPosition(bird.corpo, {x: mouseX,y: mouseY})
+  if (estado !=="jogar") {
+    Matter.Body.setPosition(bird.corpo, {x: mouseX,y: mouseY})
+  }
 }
 
 function mouseReleased(){
   estilingue.lanca()
+  estado="jogar"
 }
 
 function keyPressed(){
-  if (keyCode===32) {
+  if (keyCode===32 && bird.corpo.speed<1) {
+    bird.trajetoria=[]
     Matter.Body.setPosition(bird.corpo, {x: 200,y: 50})
+    estilingue.anexa(bird.corpo)
+    estado="inicio"
   }
+}
+
+async function escolheFundo(){
+  var resposta = await fetch("https://worldtimeapi.org/api/timezone/America/Sao_Paulo")
+  var respostaJson=await resposta.json()
+  console.log(respostaJson)
+  var hora=respostaJson.datetime.slice(11,13)
+
+  if (hora>=6 && hora<=19) {
+    fundoPadrao="sprites/bg.png"
+    cor="black"
+  } else {
+    fundoPadrao="sprites/bg2.jpg"
+    cor="white"
+  }
+  fundo=loadImage(fundoPadrao)
 }
