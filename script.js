@@ -14,9 +14,11 @@ var estado="inicio"
 var fundoPadrao="sprites/bg.png"
 var pontuacao=0
 var cor="black"
+var fundoReserva
 
 function preload() {
   escolheFundo()
+  fundoReserva=loadImage(fundoPadrao)
 }
 
 function setup() {
@@ -36,7 +38,6 @@ function setup() {
   caixa3 = new Box(700, 240, 70, 70);
   caixa4 = new Box(920, 240, 70, 70);
   pig3 = new Pig(810, 220);
-
   log3 = new Log(810, 180, 300, PI / 2);
 
   caixa5 = new Box(810, 160, 70, 70);
@@ -51,6 +52,8 @@ function setup() {
 function draw() {
   if (fundo) {
     background(fundo)
+  } else {
+    background(fundoReserva)
   }
 
   fill(cor)
@@ -105,12 +108,13 @@ async function escolheFundo(){
   console.log(respostaJson)
   var hora=respostaJson.datetime.slice(11,13)
 
-  if (hora>=6 && hora<=19) {
+  if (hora>=6 && hora<=18) {
     fundoPadrao="sprites/bg.png"
     cor="black"
   } else {
     fundoPadrao="sprites/bg2.jpg"
     cor="white"
   }
+  
   fundo=loadImage(fundoPadrao)
 }

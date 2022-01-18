@@ -1,15 +1,8 @@
 class Base {
-  constructor(x, y, largura, altura, angulo) {
-    var opcoes = {
-      density: 1.0,
-      friction: 1.0,
-      restitution: 0.8,
-    };
-
+  constructor(x, y, largura, altura, opcoes) {
     this.corpo = Bodies.rectangle(x, y, largura, altura, opcoes);
     this.largura = largura;
     this.altura = altura;
-    this.imagem = loadImage("sprites/base.png");
 
     World.add(world, this.corpo);
   }

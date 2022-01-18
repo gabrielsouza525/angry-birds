@@ -1,6 +1,12 @@
 class Pig extends Base {
   constructor(x, y) {
-    super(x, y, 50, 50);
+    var opcoes = {
+      density: 1.0,
+      friction: 1.0,
+      restitution: 0.8,
+    };
+
+    super(x, y, 50, 50,opcoes);
 
     this.imagem = loadImage("sprites/enemy.png");
     this.visibilidade=255
